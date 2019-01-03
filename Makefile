@@ -14,7 +14,7 @@ CC            = gcc
 CXX           = g++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -Iinclude -Iinclude/gui -I../../Qt/5.12.0/gcc_64/include -I../../Qt/5.12.0/gcc_64/include/QtWidgets -I../../Qt/5.12.0/gcc_64/include/QtGui -I../../Qt/5.12.0/gcc_64/include/QtCore -I. -isystem /usr/include/libdrm -I../../Qt/5.12.0/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/valdeko/Qt/5.12.0/gcc_64/bin/qmake
 DEL_FILE      = rm -f
@@ -708,7 +708,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: ../../Qt/5.12.0/gcc_64/mkspecs/features/data/dummy.cpp
-	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.0/gcc_64/mkspecs/features/data/dummy.cpp
+	g++ -pipe -g -std=gnu++1z -Wall -W -dM -E -o moc_predefs.h ../../Qt/5.12.0/gcc_64/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_sequence_textbox.cpp moc_newfeature_window.cpp
 compiler_moc_header_clean:
@@ -1333,6 +1333,17 @@ mainwindow.o: src/gui/mainwindow.cc ../../Qt/5.12.0/gcc_64/include/QtWidgets/QMe
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/QSizePolicy \
 		../../Qt/5.12.0/gcc_64/include/QtCore/QString \
 		../../Qt/5.12.0/gcc_64/include/QtGui/QKeySequence \
+		../../Qt/5.12.0/gcc_64/include/QtGui/QGuiApplication \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qguiapplication.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qcoreapplication.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qeventloop.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qinputmethod.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qclipboard.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/QTimer \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qtimer.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qbasictimer.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/QCursor \
 		include/gui/mainwindow.h \
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/QMainWindow \
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1430,7 +1441,39 @@ sequence_textbox.o: src/gui/sequence_textbox.cc ../../Qt/5.12.0/gcc_64/include/Q
 		../../Qt/5.12.0/gcc_64/include/QtGui/qvector2d.h \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qtouchdevice.h \
 		../../Qt/5.12.0/gcc_64/include/QtCore/QString \
-		../../Qt/5.12.0/gcc_64/include/QtCore/QObject
+		../../Qt/5.12.0/gcc_64/include/QtCore/QObject \
+		include/gui/sequence_textbox.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/QTextEdit \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qtextedit.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qframe.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpaintdevice.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpalette.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qcolor.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qrgb.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qrgba64.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qbrush.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qmatrix.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpolygon.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qline.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qtransform.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpainterpath.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qimage.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpixelformat.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpixmap.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qfont.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qfontmetrics.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qfontinfo.h \
+		../../Qt/5.12.0/gcc_64/include/QtWidgets/qsizepolicy.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qcursor.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qtextdocument.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qtextoption.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qtextcursor.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qtextformat.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/qpen.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sequence_textbox.o src/gui/sequence_textbox.cc
 
 newfeature_window.o: src/gui/newfeature_window.cc ../../Qt/5.12.0/gcc_64/include/QtWidgets/QWidget \
@@ -1557,7 +1600,9 @@ newfeature_window.o: src/gui/newfeature_window.cc ../../Qt/5.12.0/gcc_64/include
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/QColorDialog \
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/qcolordialog.h \
 		../../Qt/5.12.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/5.12.0/gcc_64/include/QtGui/QColor
+		../../Qt/5.12.0/gcc_64/include/QtGui/QColor \
+		../../Qt/5.12.0/gcc_64/include/QtCore/QSize \
+		include/gui/newfeature_window.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o newfeature_window.o src/gui/newfeature_window.cc
 
 moc_mainwindow.o: moc_mainwindow.cpp 

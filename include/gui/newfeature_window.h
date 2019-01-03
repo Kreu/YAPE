@@ -15,18 +15,21 @@ public:
   NewFeatureWindow(QWidget* parent);
 private:
   QLabel* start_pos_label;
-  QLineEdit* start_pos_box;
-
   QLabel* end_pos_label;
-  QLineEdit* end_pos_box;
-
   QLabel* colour_label;
-  QPushButton* display_picked_color;
+  QLabel* name_label;
+
+  QLineEdit* start_pos_box;
+  QLineEdit* end_pos_box;
+  QLineEdit* name_box;
+
   QPalette colour_label_palette;
+
   QColor current_colour;
 
   QGridLayout* layout;
 
+  QPushButton* display_picked_color;
   QPushButton* confirm_button;
   QPushButton* cancel_button;
  
@@ -36,5 +39,6 @@ private:
   void CreateUILayout();
   void AddElementsToUI();
 
+  void CreateFeature();
   void ShowNewColor(const QColor& color);
 };

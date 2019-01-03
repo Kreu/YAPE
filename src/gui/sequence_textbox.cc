@@ -23,9 +23,9 @@ bool SequenceTextBox::event(QEvent* event) {
     QKeyEvent* key = static_cast<QKeyEvent*>(event);
     
     //Detect whether the input is modified with control or shift
-    if ((key->key() == Qt::Key_C ||
-         key->key() == Qt::Key_V) && 
-         (key->modifiers() & (Qt::ControlModifier | Qt::ShiftModifier))) {
+    if ((key->modifiers() & (Qt::CTRL | Qt::ALT | Qt::SHIFT)) &&
+         (key->key() == Qt::Key_C ||
+         key->key() == Qt::Key_V)) {
       return QTextEdit::event(event);
     }
 

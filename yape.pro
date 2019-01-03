@@ -1,5 +1,5 @@
 TEMPLATE = app
-CONFIG += debug
+CONFIG += debug c++1z
 QT += core gui widgets
 
 INCLUDEPATH += $$PWD/include \

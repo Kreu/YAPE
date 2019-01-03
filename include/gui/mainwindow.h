@@ -3,7 +3,8 @@
 
 #include <QMainWindow>
 #include "sequence_textbox.h"
-
+#include <string>
+#include <tuple>
 //Forward declarations
 class QStatusBar;
 class QToolBar;
@@ -21,6 +22,11 @@ private:
   QToolBar* toolbar;
   QStatusBar* status_bar;
   QWidget* new_feature;
+  QString current_selection;
+  QString original_content;
+  bool text_selected;
+  void IsTextSelected(bool b);
+
   //UI initialisers
   void CreateMenuBar();
   void CreateToolBar();
@@ -34,6 +40,8 @@ private:
   QMenu* file_menu;
   QMenu* edit_menu;
   QMenu* features_menu;
+  QMenu* tools_menu;
+  QMenu* tools_features_submenu;
 
   //Actions
   //File menu actions
@@ -57,8 +65,9 @@ private:
   //
   //Edit menu functions
   void Complement();
+  void ComplementString(std::string& str);
   void ReverseComplement();
-
+  std::tuple<std::string, std::string, std::string> SpliceSelectedSequence();
 };
 
 #endif

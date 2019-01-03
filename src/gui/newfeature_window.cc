@@ -25,15 +25,27 @@ NewFeatureWindow::NewFeatureWindow(QWidget* parent) : QWidget(parent) {
 };
 
 void NewFeatureWindow::CreateUIElements() {
+  name_label = new QLabel("Feature name");
+  name_box = new QLineEdit(this);
+
   start_pos_label = new QLabel("Start position");
   start_pos_box = new QLineEdit(this);
   
   end_pos_label = new QLabel("End position");
   end_pos_box = new QLineEdit(this);
   
-
   cancel_button = new QPushButton("Cancel", this);
+  //Connects pressing Cancel to closing the window
+  connect(cancel_button,
+          &QPushButton::clicked,
+          this,
+          &NewFeatureWindow::close);
+  
   confirm_button = new QPushButton("Create", this);
+  connect(confirm_button,
+          &QPushButton::clicked,
+          this,
+          &NewFeatureWindow::CreateFeature);
 
   colour_label = new QLabel("Colour");
   display_picked_color = new QPushButton;
@@ -60,30 +72,29 @@ void NewFeatureWindow::CreateUIElements() {
           colour_picker_dialog,
           &QColorDialog::show);
 
-  //Connects pressing Cancel to closing the window
-  connect(cancel_button,
-          &QPushButton::clicked,
-          this,
-          &NewFeatureWindow::close);
-}
+  }
 
 void NewFeatureWindow::CreateUILayout() {
   layout = new QGridLayout(this); 
 }
 
 void NewFeatureWindow::AddElementsToUI() {
-  layout->addWidget(start_pos_label, 0, 0);
-  layout->addWidget(end_pos_label, 1, 0);
-  layout->addWidget(start_pos_box, 0, 1);
-  layout->addWidget(end_pos_box, 1, 1);
-
-  layout->addWidget(colour_label, 2, 0);
-  layout->addWidget(confirm_button, 3, 1);
-  layout->addWidget(cancel_button, 3, 0);
-  layout->addWidget(display_picked_color, 2, 1);
+  layout->addWidget(name_label, 0, 0);
+  layout->addWidget(name_box, 0, 1);
+  layout->addWidget(start_pos_label, 1, 0);
+  layout->addWidget(end_pos_label, 2, 0);
+  layout->addWidget(start_pos_box, 1, 1);
+  layout->addWidget(end_pos_box, 2, 1);
+  layout->addWidget(colour_label, 3, 0);
+  layout->addWidget(confirm_button, 4, 1);
+  layout->addWidget(cancel_button, 4, 0);
+  layout->addWidget(display_picked_color, 3, 1);
 }
 
 void NewFeatureWindow::ShowNewColor(const QColor& color) {
   colour_label_palette.setColor(QPalette::Button, color);
   display_picked_color->setPalette(colour_label_palette);
+}
+
+void NewFeatureWindow::CreateFeature() {
 }
