@@ -1,4 +1,3 @@
-#include <iostream>
 #include <QMenuBar>
 #include <QMenu>
 #include <QStatusBar>
@@ -12,18 +11,25 @@
 #include <QTimer>
 #include <QCursor>
 #include <QObject>
-#include "mainwindow.h"
-#include "sequence_textbox.h"
-#include "newfeature_window.h"
-#include "sequence_view.h"
+
+
+//Definitely needed
+#include <QMainWindow>
+#include <QMenu>
+#include <QAction>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QKeySequence>
+
+#include "main_window_view.h"
 #include "sequence_view_model.h"
 
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
- 
-  setWindowTitle("Yet Another Plasmid Editor");
-  setBaseSize(800, 550);
-  CreateSequenceBox();
+MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
+  //Create the UI element controllers
+  CreateSequenceViewModel();
+  //CreateNewFeatureViewModel(this);
+  
   //Create actions
   //DO NOT REORDER -> Actions need to be created before menus
   //because menus require actions to exist.
@@ -34,18 +40,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
   CreateToolBar();
   CreateStatusBar();
 
-  //Create central textbox
 }
 
-void MainWindow::CreateSequenceBox() {
-  //sequence_textbox = new SequenceTextBox(this);
-  //this->setCentralWidget(sequence_textbox);
-  sequence_view = new SequenceView(this);
-  sequence_viewmodel = new SequenceViewModel(sequence_view);
-  this->setCentralWidget(sequence_view);
+void MainWindowView::CreateSequenceViewModel() {
+  sequence_view_model_ = new SequenceViewModel(this);
+  this->setCentralWidget(sequence_view_model_->GetView());
 }
 
-void MainWindow::CreateMenuBar() {
+void MainWindowView::CreateMenuBar() {
 
   //File submenu
   file_menu = this->menuBar()->addMenu(tr("&File"));
@@ -91,34 +93,27 @@ void MainWindow::CreateMenuBar() {
   //Features submenu
   features_menu = this->menuBar()->addMenu(tr("Fea&tures"));
   features_menu->addAction(create_feature_act);
-  features_menu->addAction(edit_feature_act);
-  features_menu->addAction(delete_feature_act);
 }
 
-void MainWindow::CreateToolBar() {
-  toolbar = new QToolBar("Toolbar");
-  this->addToolBar(Qt::ToolBarArea::TopToolBarArea, toolbar);
+void MainWindowView::CreateToolBar() {
+  toolbar_ = new QToolBar("Toolbar");
+  this->addToolBar(Qt::ToolBarArea::TopToolBarArea, toolbar_);
 }
 
-void MainWindow::CreateStatusBar() {
-  status_bar = new QStatusBar(this);
-  this->setStatusBar(status_bar);
+void MainWindowView::CreateStatusBar() {
+  status_bar_ = new QStatusBar(this);
+  this->setStatusBar(status_bar_);
 
   QTimer* timer = new QTimer(this);
-  //timer->callOnTimeout(status_bar, this->UpdateStatusBar);
+  //timer->callOnTimeout(status_bar_, this->UpdateStatusBar);
   //connect(timer, 
   //        &QTimer::timeout, 
-  //        status_bar, 
-  //        &MainWindow::UpdateStatusBar);
+  //        status_bar_, 
+  //        &MainWindowView::UpdateStatusBar);
   timer->start(10);
 }
 
-void MainWindow::slotDoAll() {
-}
-
-
-
-void MainWindow::CreateActions() {
+void MainWindowView::CreateActions() {
   //File menu actions
   open_file_act = new QAction(tr("&Open file"));
   open_file_act->setShortcut(QKeySequence::Open);
@@ -136,13 +131,13 @@ void MainWindow::CreateActions() {
   connect(quit_app_act,
           &QAction::triggered,
           this,
-          &MainWindow::close);
+          &MainWindowView::close);
 
   //Edit menu actions
   complement_act = new QAction(tr("&Complement"));
   connect(complement_act,
           &QAction::triggered, 
-          sequence_viewmodel,
+          sequence_view_model_,
           &SequenceViewModel::CallComplement);
 
   //reverse_complement_act= new QAction(tr("&Reverse complement"));
@@ -150,20 +145,4 @@ void MainWindow::CreateActions() {
   //       &QAction::triggered,
   //        sequence_textbox,
   //        &SequenceTextBox::ReverseComplement);
-  
-  create_feature_act = new QAction(tr("&Create feature"));
-  connect(create_feature_act,
-          &QAction::triggered,
-          this,
-          &MainWindow::CreateNewFeatureWindow);
-
-  edit_feature_act = new QAction(tr("&Edit feature"));
-  delete_feature_act = new QAction(tr("&Delete feature"));
 }
-
-void MainWindow::CreateNewFeatureWindow() {
-  new_feature = new NewFeatureWindow(this);
-  new_feature->show();
-}
-
-
