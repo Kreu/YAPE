@@ -1,0 +1,22 @@
+[
+{
+  "name": "EcoRI",
+  "cut-site": "GAATTC",
+  "cut-position": 1
+},
+{
+  "name": "EcoRV",
+  "cut-site": "GATATC",
+  "cut-position": 3
+},
+{
+  "name": "XbaI",
+  "cut-site": "GTCCAG",
+  "cut-position": 5
+},
+{
+  "name": "XhoI",
+  "cut-site": "CTCGAG",
+  "cut-position": 1
+}
+]

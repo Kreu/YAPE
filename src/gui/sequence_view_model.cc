@@ -139,85 +139,16 @@ void SequenceViewModel::CallReverseComplement() {
   ProcessSelection(&SequenceViewModel::ReverseComplement);
   return;
 }
-
-//void SequenceViewModel::CallComplement() {
-//  if (text_selected_) {
-//    auto selection_length_ = start_pos_ + (end_pos_ - start_pos_);
-//    QString current_selection = sequence_.mid(start_pos_, end_pos_ - start_pos_);
-//    QString complemented_sequence = Complement(current_selection);    
-//   
-//    //Don't update the sequence_ directly
-//    QString new_sequence = sequence_; 
-//    new_sequence.replace(start_pos_, complemented_sequence.length(), complemented_sequence);
-//    
-//    //We need a local copy here because setting the text de-selects it, which 
-//    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-//    //sets the end position to -1
-//    auto save_end_pos = end_pos_;
-//    emit NotifySequenceChanged(new_sequence);
-//    emit NotifyCursorPositionChanged(save_end_pos);
-//    return;
-//  }
-//  else if (!text_selected_) {
-//    QString complemented_sequence = Complement(sequence_);
-//    
-//    //We need a local copy here because setting the text de-selects it, which 
-//    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-//    //sets the end position to -1
-//    auto save_end_pos = end_pos_;
-//    emit NotifySequenceChanged(complemented_sequence);; 
-//    emit NotifyCursorPositionChanged(save_end_pos);
-//    return;
-//  }
-//}
-//
-//void SequenceViewModel::CallReverseComplement() {
-//  if (text_selected_) {
-//    auto selection_length_ = start_pos_ + (end_pos_ - start_pos_);
-//    QString current_selection = sequence_.mid(start_pos_, end_pos_ - start_pos_);
-//    QString reverse_complement = Complement(current_selection);
-//         
-//    //Don't update the sequence_ directly
-//    QString new_sequence = sequence_; 
-//    
-//    //No STL-type reverse function in QT
-//    std::string temp = reverse_complement.toStdString();
-//    std::reverse(temp.begin(), temp.end());
-//    reverse_complement = QString::fromStdString(temp);
-//    
-//    new_sequence.replace(start_pos_, reverse_complement.length(), reverse_complement);
-//    
-//    //We need a local copy here because setting the text de-selects it, which 
-//    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-//    //sets the end position to -1
-//    auto save_end_pos = end_pos_;
-//    emit NotifySequenceChanged(new_sequence);
-//    emit NotifyCursorPositionChanged(save_end_pos);
-//    return;
-//  }
-//  else if (!text_selected_) {
-//    QString new_sequence = sequence_;
-//    QString reverse_complement = Complement(new_sequence);
-//    //No STL-type reverse function in QT
-//    std::string temp = reverse_complement.toStdString();
-//    std::reverse(temp.begin(), temp.end());
-//    reverse_complement = QString::fromStdString(temp);
-//    
-//    //We need a local copy here because setting the text de-selects it, which 
-//    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-//    //sets the end position to -1
-//    auto save_end_pos = end_pos_;
-//    emit NotifySequenceChanged(reverse_complement); 
-//    emit NotifyCursorPositionChanged(save_end_pos);
-//    return;
-//  }
-//}
-
 void SequenceViewModel::CallTranslate() {
 
 }
 
 void SequenceViewModel::ProcessSelection(Function processing_function) {
+  //We need a local copy here because setting the text de-selects it, which 
+  //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
+  //sets the end position to -1
+  auto save_end_pos = end_pos_;
+
   if (text_selected_) {
     QString current_selection = sequence_.mid(start_pos_, end_pos_ - start_pos_);
     QString processed_sequence = (this->*processing_function)(current_selection);    
@@ -226,20 +157,12 @@ void SequenceViewModel::ProcessSelection(Function processing_function) {
     QString new_sequence = sequence_; 
     new_sequence.replace(start_pos_, processed_sequence.length(), processed_sequence);
     
-    //We need a local copy here because setting the text de-selects it, which 
-    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-    //sets the end position to -1
-    auto save_end_pos = end_pos_;
     emit NotifySequenceChanged(new_sequence);
     emit NotifyCursorPositionChanged(save_end_pos);
     return;
   }
   else if (!text_selected_) {
     QString processed_sequence = (this->*processing_function)(sequence_);    
-    //We need a local copy here because setting the text de-selects it, which 
-    //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-    //sets the end position to -1
-    auto save_end_pos = end_pos_;
     emit NotifySequenceChanged(processed_sequence); 
     emit NotifyCursorPositionChanged(save_end_pos);
     return;
@@ -433,7 +356,7 @@ double SequenceViewModel::CalculateMw(QString protein_sequence) {
         {'M', 131.1926},
         {'C', 103.1388} };
 
-  double molecular_weight;
+  double molecular_weight{0};
 
   for (const QChar& amino_acid : protein_sequence) {
     molecular_weight += average_molecular_weights[amino_acid];
