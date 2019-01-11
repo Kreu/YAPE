@@ -1,3 +1,6 @@
+#ifndef NEW_FEATURE_WINDOW_H
+#define NEW_FEATURE_WINDOW_H
+
 #include <QWidget>
 #include <QGridLayout>
 
@@ -42,3 +45,5 @@ private:
   void CreateFeature();
   void ShowNewColor(const QColor& color);
 };
+
+#endif

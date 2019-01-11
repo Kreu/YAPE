@@ -8,7 +8,7 @@ class QStatusBar;
 class QWidget;
 class SequenceViewModel;
 
-class MainWindowView : public QMainWindow {
+class MainWindowView: public QMainWindow {
 Q_OBJECT
 public:
   explicit MainWindowView(QWidget* parent = 0);
@@ -24,6 +24,15 @@ private:
   QWidget* new_feature_view_;
   QWidget* restriction_digest_view_;
 
+  //UI initialisers
+  void CreateMenuBar();
+  void CreateToolBar();
+  void CreateStatusBar();
+  void CreateActions();
+
+  void CreateSequenceViewModel();
+  //void CreateNewFeatureViewModel();
+  void CreateRestrictionDigestView();
   //Menus
   QMenu* file_menu_;
   QMenu* edit_menu_;
@@ -37,17 +46,6 @@ private:
   QAction* save_file_act_;
   QAction* print_act_;
   QAction* preferences_act_;
-
-  //Methods
-  //UI initialisers
-  void CreateMenuBar();
-  void CreateToolBar();
-  void CreateStatusBar();
-  void CreateActions();
-
-  void CreateSequenceViewModel();
-  //void CreateNewFeatureViewModel();
-  void CreateRestrictionDigestView();
 };
 
 #endif

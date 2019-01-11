@@ -16,9 +16,6 @@
 #include "main_window_view.h"
 #include "sequence_view_model.h"
 
-//////////////
-//  PUBLIC  //
-//////////////
 MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
   setWindowTitle("Yet Another Plasmid Editor");
   //Create the UI element controllers
@@ -37,9 +34,11 @@ MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
   this->resize(500, 400);
 }
 
-///////////////
-//  PRIVATE  //
-///////////////
+void MainWindowView::CreateSequenceViewModel() {
+  sequence_view_model_ = new SequenceViewModel(this);
+  this->setCentralWidget(sequence_view_model_->GetView());
+}
+
 void MainWindowView::CreateMenuBar() {
 
   //File submenu
@@ -99,6 +98,7 @@ void MainWindowView::CreateMenuBar() {
   help_menu_ = this->menuBar()->addMenu(tr("&About"));
 }
 
+
 void MainWindowView::CreateToolBar() {
   toolbar_ = new QToolBar("Toolbar");
   this->addToolBar(Qt::ToolBarArea::TopToolBarArea, toolbar_);
@@ -132,40 +132,35 @@ void MainWindowView::CreateActions() {
   preferences_act_ = new  QAction(tr("P&references"));
 }
 
-void MainWindowView::CreateSequenceViewModel() {
-  sequence_view_model_ = new SequenceViewModel(this);
-  this->setCentralWidget(sequence_view_model_->GetView());
-}
-
 void MainWindowView::CreateRestrictionDigestView() {
   QWidget* restriction_digest_view = new QWidget(this);
   restriction_digest_view->setWindowFlags(Qt::Window);
   restriction_digest_view->setWindowTitle("Restriction digest");
 
 
-  QListWidget* all_enzymes_view = new QListWidget(restriction_digest_view);
+  QListWidget* all_enymes_view = new QListWidget(restriction_digest_view);
   QListWidget* selected_enzymes_view = new QListWidget(restriction_digest_view);
-  all_enzymes_view->setFlow(QListWidget::TopToBottom);
+  all_enymes_view->setFlow(QListWidget::TopToBottom);
   selected_enzymes_view->setFlow(QListWidget::TopToBottom);
 
   QGridLayout* layout = new QGridLayout();
-  QLabel* all_enyzmes_label = new QLabel("All enzymes");
+  QLabel* all_enymes_label = new QLabel("All enzymes");
   QLabel* selected_enzymes_label = new QLabel("Selected enzymes");
-  layout->addWidget(all_enyzmes_label, 0, 0);
+  layout->addWidget(all_enymes_label, 0, 0);
   layout->addWidget(selected_enzymes_label, 0, 2);
 
-  layout->addWidget(all_enzymes_view, 1, 0);
+  layout->addWidget(all_enymes_view, 1, 0);
   layout->addWidget(selected_enzymes_view, 1, 2);
   restriction_digest_view->setLayout(layout);
   restriction_digest_view->show();
  
   //Placeholder data
   QListWidgetItem* ecori = new QListWidgetItem(tr("EcoRI"));
-  all_enzymes_view->insertItem(0, ecori);
+  all_enymes_view->insertItem(0, ecori);
   QListWidgetItem* ecorv = new QListWidgetItem(tr("EcoRV"));
-  all_enzymes_view->insertItem(0, ecorv);
+  all_enymes_view->insertItem(0, ecorv);
   QListWidgetItem* bamhi= new QListWidgetItem(tr("BamHI"));
-  all_enzymes_view->insertItem(0, bamhi);
+  all_enymes_view->insertItem(0, bamhi);
   QListWidgetItem* xbai = new QListWidgetItem(tr("XbaI"));
-  all_enzymes_view->insertItem(0, xbai);
+  all_enymes_view->insertItem(0, xbai);
 }

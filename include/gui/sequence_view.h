@@ -1,23 +1,35 @@
 #ifndef SEQUENCE_VIEW_H
 #define SEQUENCE_VIEW_H
 
-#include <QTextEdit>
-#include <QString>
+#include <QPlainTextEdit>
 
-class QWidget;
-class QEvent;
+class QString;
 
-class SequenceView : public QTextEdit {
+class SequenceView : public QPlainTextEdit {
 Q_OBJECT
 public:
   SequenceView(QWidget* parent = nullptr);
-  bool virtual event(QEvent* event) override; //every time a key is inserted, ViewTextUpdated() is emitted
-
 signals:
-  void ViewTextUpdated(QString str);
+  //Notifies that the user has changed the sequence in the SequenceView widget
+  void NotifySequenceChanged(QString sequence);
+  //Notifies that the user has clicked somewhere in the SequenceView widget
+  void NotifyCursorPositionChanged(int current_position);
+  //Notifies that the user has selected a different text. It is only emitted
+  //when there is actually something selected, i.e. deselecting a text does
+  //not emit this signal.
+  void NotifySelectionChanged(int start_pos, int end_pos);
 public slots:
-  void UpdateCursorPosition(int position);
+  //Sets the current QPlainTextEdit text to sequence
+  void ProcessSequenceChanged(QString sequence);
+  //Sets the cursor position to the new position
+  void ProcessCursorPositionChanged(int position);
+  //Captures textChanged() signal from QPlainTextEdit and re-emits NotifySelectionChanged(int, int);
+  void ProcessSelectionChanged();
 private:
+  //Filters key presses from the keyboard
+  virtual void keyPressEvent(QKeyEvent* event) override;
+  //Filters text copied from an outside source into the SequenceView widget
+  QString filterClipboardInput();
 };
 
 #endif
