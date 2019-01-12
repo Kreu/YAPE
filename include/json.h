@@ -1,3 +1,6 @@
+#ifndef JSON_H
+#define JSON_H
+
 #include <QString>
 #include <QJsonArray>
 
@@ -7,3 +10,5 @@ public:
 private:
   JSON() = delete;
 };
+
+#endif

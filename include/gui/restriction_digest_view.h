@@ -1,3 +1,6 @@
+#ifndef RESTRICTION_DIGEST_VIEW_H
+#define RESTRICTION_DIGEST_VIEW_H
+
 #include <QWidget>
 
 #include <QJsonObject>
@@ -13,3 +16,5 @@ signals:
 private:
   void ReadJSON(const QJsonObject& enzyme);
 };
+
+#endif
