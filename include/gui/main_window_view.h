@@ -7,6 +7,7 @@ class QToolBar;
 class QStatusBar;
 class QWidget;
 class SequenceViewModel;
+class TranslateViewModel;
 
 class MainWindowView : public QMainWindow {
 Q_OBJECT
@@ -15,7 +16,7 @@ public:
 private:
   //Variables
   SequenceViewModel* sequence_view_model_;
-
+  TranslateViewModel* translate_view_model_;
   //ToolBarViewModel;
   //StatusBarViewModel;
   //NewFeatureViewModel;
@@ -47,6 +48,7 @@ private:
 
   void CreateSequenceViewModel();
   //void CreateNewFeatureViewModel();
+  void CreateTranslateViewModel();
   void CreateRestrictionDigestView();
 };
 

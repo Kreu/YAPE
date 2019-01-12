@@ -12,9 +12,11 @@
 #include <QListWidget>
 #include <QGridLayout>
 #include <QLabel>
+#include <QDebug>
 
 #include "main_window_view.h"
 #include "sequence_view_model.h"
+#include "translate_view_model.h"
 
 #include "restriction_digest_view.h"
 
@@ -25,8 +27,8 @@ MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
   setWindowTitle("Yet Another Plasmid Editor");
   //Create the UI element controllers
   CreateSequenceViewModel();
+  CreateTranslateViewModel();
   //CreateNewFeatureViewModel(this);
-  
   //Create actions
   //DO NOT REORDER -> Actions need to be created before menus
   //because menus require actions to exist.
@@ -76,8 +78,8 @@ void MainWindowView::CreateMenuBar() {
                          &SequenceViewModel::CallReverseComplement);
 
   tools_menu_->addAction((tr("&Translate")),
-                         sequence_view_model_,
-                         &SequenceViewModel::CallTranslate);
+                         translate_view_model_,
+                         &TranslateViewModel::CallTranslate);
 
   tools_menu_->addAction((tr("Restriction &digest")),
                          this,
@@ -135,8 +137,14 @@ void MainWindowView::CreateActions() {
 }
 
 void MainWindowView::CreateSequenceViewModel() {
+  qDebug() << "Created SequenceViewModel";
   sequence_view_model_ = new SequenceViewModel(this);
   this->setCentralWidget(sequence_view_model_->GetView());
+}
+
+void MainWindowView::CreateTranslateViewModel() {
+  qDebug() << "Created TranslateViewModel";
+  translate_view_model_ = new TranslateViewModel(sequence_view_model_->GetModel(), this);
 }
 
 void MainWindowView::CreateRestrictionDigestView() {

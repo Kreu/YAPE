@@ -18,6 +18,7 @@ public:
                     SequenceView* sequence_view = new SequenceView(),
                     SequenceModel* sequence_model = new SequenceModel());
   QWidget* GetView();
+  SequenceModel* GetModel();
 signals:
   //This signal is emitted whenever the local sequence copy of SequenceViewModel
   //is updated.
@@ -53,9 +54,6 @@ private:
   void ProcessSelection(Function function);
   QString Complement(QString sequence);
   QString ReverseComplement(QString sequence);
-  QString Translate(QString sequence);
-  
-  double CalculateMw(QString protein);
 };
 
 #endif

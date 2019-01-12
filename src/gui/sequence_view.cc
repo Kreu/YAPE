@@ -32,6 +32,7 @@ SequenceView::SequenceView(QWidget* parent) : QPlainTextEdit(parent) {
 /////////////
 void SequenceView::ProcessSequenceChanged(QString sequence) {
   if (this->toPlainText() != sequence) {
+    qDebug() << "Updated SequenceView";
     this->setPlainText(sequence);
     emit NotifySequenceChanged(sequence);
     return;
@@ -51,7 +52,6 @@ void SequenceView::ProcessCursorPositionChanged(int position) {
 
 void SequenceView::ProcessSelectionChanged() {
   QTextCursor cursor = this->textCursor();
-  qDebug() << cursor.selectionStart() << cursor.selectionEnd();
   emit NotifySelectionChanged(cursor.selectionStart(), cursor.selectionEnd());
   return;
 }

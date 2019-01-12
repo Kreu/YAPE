@@ -19,7 +19,8 @@ QString SequenceModel::GetSequence() {
 void SequenceModel::ProcessSequenceChanged(QString sequence) {
   //If the data is new, process it.
   if(sequence != sequence_) {
-    qDebug() << "Setting SequenceModel sequence to" << sequence;
+    qDebug() << "Updated SequenceModel";
+    qDebug() << "New sequence:" << sequence;
     sequence_ = sequence;
     emit NotifySequenceChanged(sequence_);
     return;
