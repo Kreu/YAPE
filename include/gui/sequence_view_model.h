@@ -17,8 +17,11 @@ public:
   SequenceViewModel(QObject* parent = nullptr, 
                     SequenceView* sequence_view = new SequenceView(),
                     SequenceModel* sequence_model = new SequenceModel());
-  QWidget* GetView();
+  SequenceView* GetView();
   SequenceModel* GetModel();
+  //Returns the current user-selected sequence. If no sequence is selected, 
+  //return the whole sequence.
+  QString GetSequence();
 signals:
   //This signal is emitted whenever the local sequence copy of SequenceViewModel
   //is updated.

@@ -59,7 +59,8 @@ SOURCES       = src/yape.cc \
 		src/gui/restriction_digest_view.cc \
 		src/json.cc \
 		src/gui/translate_view.cc \
-		src/gui/translate_view_model.cc moc_main_window_view.cpp \
+		src/gui/translate_view_model.cc \
+		src/oligo_analyser.cc moc_main_window_view.cpp \
 		moc_sequence_view_model.cpp \
 		moc_sequence_view.cpp \
 		moc_sequence_model.cpp \
@@ -77,6 +78,7 @@ OBJECTS       = yape.o \
 		json.o \
 		translate_view.o \
 		translate_view_model.o \
+		oligo_analyser.o \
 		moc_main_window_view.o \
 		moc_sequence_view_model.o \
 		moc_sequence_view.o \
@@ -284,7 +286,8 @@ DIST          = ../../Qt/5.12.0/gcc_64/mkspecs/features/spec_pre.prf \
 		include/gui/restriction_digest_view.h \
 		include/json.h \
 		include/gui/translate_view.h \
-		include/gui/translate_view_model.h src/yape.cc \
+		include/gui/translate_view_model.h \
+		include/oligo_analyser.h src/yape.cc \
 		src/gui/main_window_view.cc \
 		src/gui/sequence_view_model.cc \
 		src/gui/sequence_view.cc \
@@ -293,7 +296,8 @@ DIST          = ../../Qt/5.12.0/gcc_64/mkspecs/features/spec_pre.prf \
 		src/gui/restriction_digest_view.cc \
 		src/json.cc \
 		src/gui/translate_view.cc \
-		src/gui/translate_view_model.cc
+		src/gui/translate_view_model.cc \
+		src/oligo_analyser.cc
 QMAKE_TARGET  = yape
 DESTDIR       = 
 TARGET        = yape
@@ -711,8 +715,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/5.12.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents include/gui/main_window_view.h include/gui/sequence_view_model.h include/gui/sequence_view.h include/models/sequence_model.h include/models/feature_model.h include/gui/restriction_digest_view.h include/json.h include/gui/translate_view.h include/gui/translate_view_model.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/yape.cc src/gui/main_window_view.cc src/gui/sequence_view_model.cc src/gui/sequence_view.cc src/models/sequence_model.cc src/models/feature_model.cc src/gui/restriction_digest_view.cc src/json.cc src/gui/translate_view.cc src/gui/translate_view_model.cc $(DISTDIR)/
+	$(COPY_FILE) --parents include/gui/main_window_view.h include/gui/sequence_view_model.h include/gui/sequence_view.h include/models/sequence_model.h include/models/feature_model.h include/gui/restriction_digest_view.h include/json.h include/gui/translate_view.h include/gui/translate_view_model.h include/oligo_analyser.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/yape.cc src/gui/main_window_view.cc src/gui/sequence_view_model.cc src/gui/sequence_view.cc src/models/sequence_model.cc src/models/feature_model.cc src/gui/restriction_digest_view.cc src/json.cc src/gui/translate_view.cc src/gui/translate_view_model.cc src/oligo_analyser.cc $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1574,6 +1578,9 @@ moc_translate_view_model.cpp: ../../Qt/5.12.0/gcc_64/include/QtCore/QObject \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qglyphrun.h \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qrawfont.h \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qfontdatabase.h \
+		include/gui/sequence_view_model.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/QTextCursor \
+		include/gui/sequence_view.h \
 		include/models/sequence_model.h \
 		include/gui/translate_view_model.h \
 		moc_predefs.h \
@@ -2743,8 +2750,79 @@ translate_view_model.o: src/gui/translate_view_model.cc ../../Qt/5.12.0/gcc_64/i
 		../../Qt/5.12.0/gcc_64/include/QtGui/qglyphrun.h \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qrawfont.h \
 		../../Qt/5.12.0/gcc_64/include/QtGui/qfontdatabase.h \
+		include/gui/sequence_view_model.h \
+		../../Qt/5.12.0/gcc_64/include/QtGui/QTextCursor \
+		include/gui/sequence_view.h \
 		include/models/sequence_model.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o translate_view_model.o src/gui/translate_view_model.cc
+
+oligo_analyser.o: src/oligo_analyser.cc ../../Qt/5.12.0/gcc_64/include/QtCore/QMap \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qmap.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qiterator.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qglobal.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qconfig.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qtcore-config.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qsystemdetection.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qprocessordetection.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qtypeinfo.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qsysinfo.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qlogging.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qflags.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qatomic.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qbasicatomic.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qgenericatomic.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qglobalstatic.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qmutex.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qnumeric.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qversiontagging.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qlist.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qalgorithms.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qrefcount.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qarraydata.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qhashfunctions.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstring.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qchar.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qbytearray.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qnamespace.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringliteral.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringalgorithms.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringview.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringbuilder.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qpair.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qbytearraylist.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringlist.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qregexp.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qstringmatcher.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qdebug.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qhash.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qtextstream.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qiodevice.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qobject.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qobjectdefs.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qcoreevent.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qscopedpointer.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qmetatype.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qobject_impl.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qlocale.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qvariant.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qshareddata.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qvector.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qpoint.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qset.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qsharedpointer.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../Qt/5.12.0/gcc_64/include/QtCore/QString \
+		../../Qt/5.12.0/gcc_64/include/QtCore/QPair
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o oligo_analyser.o src/oligo_analyser.cc
 
 moc_main_window_view.o: moc_main_window_view.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_main_window_view.o moc_main_window_view.cpp

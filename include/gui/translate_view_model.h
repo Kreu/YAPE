@@ -6,12 +6,12 @@
 #include <QString>
 
 #include "translate_view.h"
-#include "sequence_model.h"
+#include "sequence_view_model.h"
 
 class TranslateViewModel : public QWidget {
 Q_OBJECT
 public:
-  TranslateViewModel(SequenceModel* sequence_model, QWidget* parent = nullptr);
+  TranslateViewModel(SequenceViewModel* sequence_view_model, QWidget* parent = nullptr);
 signals:
   void NotifyTranslatedSequence(QString str);
   void NotifyMolecularWeight(double mw);
@@ -20,7 +20,7 @@ public slots:
   void CallTranslate();
 private:
   //Variables
-  SequenceModel* sequence_model_;
+  SequenceViewModel* sequence_view_model_;
   TranslateView* translate_view_;
   //Methods
   void Translate(QString sequence);

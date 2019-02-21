@@ -13,6 +13,8 @@ class MainWindowView : public QMainWindow {
 Q_OBJECT
 public:
   explicit MainWindowView(QWidget* parent = 0);
+public slots:
+  void ProcessSelectionChanged();
 private:
   //Variables
   SequenceViewModel* sequence_view_model_;

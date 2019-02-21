@@ -11,8 +11,8 @@ namespace {
 //////////////
 //  PUBLIC  //
 //////////////
-TranslateViewModel::TranslateViewModel(SequenceModel* sequence_model, QWidget* parent) 
-                        : QWidget(parent), sequence_model_(sequence_model) {
+TranslateViewModel::TranslateViewModel(SequenceViewModel* sequence_view_model, QWidget* parent) 
+                        : QWidget(parent), sequence_view_model_(sequence_view_model) {
   qDebug() << "In TranslateViewModel constructor"; 
  
   //TODO: Connect TranslateView slots to TranslateViewModel signals INSIDE 
@@ -38,7 +38,7 @@ TranslateViewModel::TranslateViewModel(SequenceModel* sequence_model, QWidget* p
 
 void TranslateViewModel::CallTranslate() {
   //TODO: Don't use sequence_model directly, get sequence from SequenceViewModel
-  Translate(sequence_model_->GetSequence());
+  Translate(sequence_view_model_->GetSequence());
   translate_view_->show();
 }
 

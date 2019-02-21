@@ -76,12 +76,22 @@ SequenceViewModel::SequenceViewModel(QObject* parent, SequenceView* sequence_vie
   //        SequenceViewModel::ProcessFeatureChanged);
 }
 
-QWidget* SequenceViewModel::GetView() {
+SequenceView* SequenceViewModel::GetView() {
   return sequence_view_;
 }
 
 SequenceModel* SequenceViewModel::GetModel() {
   return sequence_model_;
+}
+
+QString SequenceViewModel::GetSequence() {
+  if (text_selected_) {
+    return sequence_.mid(start_pos_, end_pos_-start_pos_);
+  }
+  
+  if (!text_selected_) {
+    return sequence_;
+  }
 }
 
 /////////////
@@ -151,7 +161,7 @@ void SequenceViewModel::CallTranslate() {
 void SequenceViewModel::ProcessSelection(Function processing_function) {
   //We need a local copy here because setting the text de-selects it, which 
   //in turn emits a NotifyCursorPositionChanged signal to SequenceViewModel that
-  //sets the end position to -1
+ //sets the end position to -1
   auto save_end_pos = end_pos_;
 
   if (text_selected_) {

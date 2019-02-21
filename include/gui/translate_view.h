@@ -25,8 +25,12 @@ private:
   QGridLayout* layout_;
   QLabel* length_;
   QLabel* mol_weight_;
+  QLabel* translation_start_;
+  QLabel* translation_end_;
   QLineEdit* length_box_;
   QLineEdit* mol_weight_box_;
+  QLineEdit* translation_start_box_;
+  QLineEdit* translation_end_box_;
 };
 
 #endif

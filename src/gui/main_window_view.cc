@@ -20,6 +20,7 @@
 
 #include "restriction_digest_view.h"
 
+#include "oligo_analyser.h"
 //////////////
 //  PUBLIC  //
 //////////////
@@ -38,7 +39,12 @@ MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
   CreateMenuBar();
   CreateToolBar();
   CreateStatusBar();
-  this->resize(500, 400);
+  connect(sequence_view_model_->GetView(),
+        &SequenceView::NotifySelectionChanged,
+        this,
+        &MainWindowView::ProcessSelectionChanged);
+
+ this->resize(500, 400);
 }
 
 ///////////////
@@ -46,7 +52,7 @@ MainWindowView::MainWindowView(QWidget* parent) : QMainWindow(parent) {
 ///////////////
 void MainWindowView::CreateMenuBar() {
 
-  //File submenu
+ //File submenu
   file_menu_ = this->menuBar()->addMenu(tr("&File"));
   //file_menu_->addAction(new_file_act);
   file_menu_->addAction(open_file_act_);
@@ -144,9 +150,17 @@ void MainWindowView::CreateSequenceViewModel() {
 
 void MainWindowView::CreateTranslateViewModel() {
   qDebug() << "Created TranslateViewModel";
-  translate_view_model_ = new TranslateViewModel(sequence_view_model_->GetModel(), this);
+  translate_view_model_ = new TranslateViewModel(sequence_view_model_, this);
 }
 
 void MainWindowView::CreateRestrictionDigestView() {
   RestrictionDigestView* restriction_enzymes = new RestrictionDigestView(this);
 }
+
+void MainWindowView::ProcessSelectionChanged() {
+  QString sequence = sequence_view_model_->GetSequence();
+  double tm = OligoAnalyser::CalculateTm(sequence);
+  status_bar_->showMessage(QString::number(tm));
+};
+
+
